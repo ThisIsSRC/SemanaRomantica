@@ -7,14 +7,15 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://imgur.com/BWuUEPV.png">
     <style>
+        /* Centralização vertical e horizontal para todas as telas */
         body {
-            background: linear-gradient(135deg, #3a8dde 60%, #f7b6d2 100%);
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Poppins', Arial, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(135deg, #3a8dde 60%, #f7b6d2 100%);
         }
         .page {
             display: none;
@@ -77,7 +78,8 @@
             margin-top: 18px;
             margin-bottom: 6px;
             color: #3a8dde;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
         input, textarea {
             display: block;
@@ -90,6 +92,9 @@
             font-size: 1rem;
             background: #f9faff;
             transition: border 0.2s;
+        }
+        textarea {
+            resize: vertical;
         }
         input:focus, textarea:focus {
             border-color: #3a8dde;
@@ -294,6 +299,155 @@
             40%  { transform: translateY(0);}
             100% { transform: translateY(0);}
         }
+        /* Responsividade */
+        @media (max-width: 600px) {
+            body {
+                align-items: center;
+                justify-content: center;
+                padding-top: 0;
+            }
+            .page {
+                max-width: 90vw;
+                min-height: 100vh;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                display: none;
+            }
+            .page.active {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+            }
+            .envelope-card {
+                max-width: 320px; 
+                margin: 0 auto;
+            }
+            input, textarea {
+                width: 100%;
+                max-width: 100vw;
+                font-size: 1.05rem;
+            }
+            button, .back-button {
+                font-size: 1rem;
+                padding: 12px 0;
+            }
+            h1, h2 {
+                font-size: 1.25rem;
+                margin-top: 32px;
+            }
+            .envelope-seal {
+                width: 54px;
+                height: 54px;
+                top: -28px;
+            }
+            .envelope-seal span, .envelope-seal img {
+                font-size: 1.5rem;
+                width: 32px;
+                height: 32px;
+            }
+            .footer {
+                font-size: 0.95rem;
+                margin-bottom: 8px;
+            }
+            .example {
+                font-size: 0.95rem;
+            }
+        }
+        .btn-breve {
+            background: linear-gradient(90deg, #cccccc, #e0e0e0);
+            color: #888;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: not-allowed;
+            margin-top: 12px;
+            box-shadow: 0 2px 12px #8882;
+            display: block;
+            position: relative;
+            transition: background 0.2s;
+            width: 100%;
+        }
+        .btn-breve span {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        .btn-breve:hover {
+            background: linear-gradient(90deg, #bbbbbb, #dddddd);
+        }
+        .tooltip-contador {
+            position: absolute;
+            left: 50%;
+            top: -48px;
+            transform: translateX(-50%);
+            background: #3a8dde;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 2px 12px #3a8dde44;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        .btn-breve.show-tooltip .tooltip-contador {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0);}
+            20% { transform: translateX(-6px);}
+            40% { transform: translateX(6px);}
+            60% { transform: translateX(-4px);}
+            80% { transform: translateX(4px);}
+            100% { transform: translateX(0);}
+        }
+        .btn-breve.shake {
+            animation: shake 0.5s;
+        }
+        .ranking-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0 0 18px 0;
+        }
+        .ranking-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            background: #f7faff;
+            border-radius: 8px;
+            padding: 8px 12px;
+            border: 1.5px solid #e0e7ef;
+        }
+        .ranking-list li.top1 {
+            background: linear-gradient(90deg, #ffe082 60%, #fffde7 100%);
+            font-weight: bold;
+            color: #bfa100;
+            border: 2px solid #ffe082;
+        }
+        .ranking-list li.top2 {
+            background: linear-gradient(90deg, #e0e0e0 60%, #fff 100%);
+            font-weight: bold;
+            color: #888;
+            border: 2px solid #e0e0e0;
+        }
+        .ranking-list li.top3 {
+            background: linear-gradient(90deg, #ffd180 60%, #fff3e0 100%);
+            font-weight: bold;
+            color: #b26a00;
+            border: 2px solid #ffd180;
+        }
+        .ranking-medal {
+            font-size: 1.4em;
+            margin-right: 6px;
+        }
     </style>
 </head>
 <body>
@@ -320,14 +474,21 @@
             <div class="subtitle">Escolha uma das opções abaixo:</div>
             <div style="display:flex; flex-direction:column; gap:16px; width:100%; margin-top:16px;">
                 <button type="button" style="width:80%; align-self:center;" onclick="navigateTo('correio')">Correio Elegante 💌</button>
-                <button type="button" style="width:80%; align-self:center;" onclick="navigateTo('melhor-dupla')">Votação: Melhor Dupla 👫</button>
+                <button type="button" id="btn-melhor-dupla" style="width:80%; align-self:center; display:none;" onclick="navigateTo('melhor-dupla')">Votação: Melhor Dupla 👫</button>
+                <button type="button" id="btn-dupla-breve" class="btn-breve" style="width:80%; align-self:center; display:block; position:relative;">
+                    <span>🔒</span>Em breve
+                    <span class="tooltip-contador" id="contador-tooltip"></span>
+                </button>
+                <button type="button" id="btn-ranking" style="width:80%; align-self:center;" onclick="navigateTo('ranking')">Ranking 💎</button>
             </div>
         </div>
     </div>
 
     <!-- Correio Elegante -->
     <div class="page" id="correio">
-        <form class="envelope-card" id="form-correio" autocomplete="off">
+        <form class="envelope-card" id="form-correio" autocomplete="off"
+            action="https://docs.google.com/forms/d/e/1FAIpQLSfbvJgP0gKUnWCfEQXmMShPCvVKIPvCUWXoK0SBibqVGkRSqQ/formResponse"
+            method="POST">
             <div class="envelope-seal">
                 <span class="wolf-icon">🐺</span>
             </div>
@@ -335,12 +496,13 @@
             <div class="subtitle">
                 Envie uma mensagem para alguém especial neste Dia dos Namorados!
             </div>
+            <input type="hidden" name="entry.827370412" value="Correio Elegante">
             <label for="remetente">Seu Nickname (opcional)</label>
-            <input type="text" id="remetente" name="remetente" maxlength="40" placeholder="Deixe em branco para ser anônimo">
+            <input type="text" id="remetente" name="entry.490416092" maxlength="40" placeholder="Deixe em branco para ser anônimo">
             <label for="destinatario">Para quem?</label>
-            <input type="text" id="destinatario" name="destinatario" maxlength="40" required placeholder="Nome do destinatário">
+            <input type="text" id="destinatario" name="entry.2069130195" maxlength="40" required placeholder="Nome do destinatário">
             <label for="mensagem">Mensagem</label>
-            <textarea id="mensagem" name="mensagem" rows="5" maxlength="300" required placeholder="Escreva sua cartinha aqui..."></textarea>
+            <textarea id="mensagem" name="entry.751823892" rows="5" maxlength="300" required placeholder="Escreva sua cartinha aqui..."></textarea>
             <button type="submit">Enviar cartinha 💌</button>
             <button type="button" class="back-button" onclick="navigateTo('home')">Voltar para a página inicial</button>
             <div class="footer">
@@ -358,15 +520,17 @@
                     Obrigado por compartilhar sua mensagem especial.<br>
                     Ela será entregue com todo o carinho!
                 </div>
-                <button onclick="restartCorreio()">Enviar outra cartinha</button>
-                <button onclick="navigateTo('home')">Voltar para a página inicial</button>
+                <button type="button" onclick="restartCorreio()">Enviar outra cartinha</button>
+                <button type="button" onclick="navigateTo('home')">Voltar para a página inicial</button>
             </div>
         </div>
     </div>
 
     <!-- Melhor Dupla -->
     <div class="page" id="melhor-dupla">
-        <form class="envelope-card" id="form-dupla" autocomplete="off">
+        <form class="envelope-card" id="form-dupla" autocomplete="off"
+            action="https://docs.google.com/forms/d/e/1FAIpQLSfbvJgP0gKUnWCfEQXmMShPCvVKIPvCUWXoK0SBibqVGkRSqQ/formResponse"
+            method="POST">
             <div class="envelope-seal">
                 <span class="wolf-icon">🐺</span>
             </div>
@@ -374,8 +538,9 @@
             <div class="subtitle">
                 Escolha a melhor dupla (ou casal rs) da Companhia dos Instrutores!
             </div>
-            <label for="dupla">Digite o nome da dupla:</label>
-            <input type="text" id="dupla" name="dupla" placeholder="Escolha sua dupla preferida!" required>
+            <input type="hidden" name="entry.827370412" value="Votação: Melhor Dupla">
+            <label for="dupla">Digite os nicknames da dupla:</label>
+            <input type="text" id="dupla" name="entry.1019419634" placeholder="Escolha sua dupla preferida!" required>
             <p class="example">Exemplo: joaobruxao e Joao:Roberto</p>
             <button type="submit">Enviar voto 💌</button>
             <button type="button" class="back-button" onclick="navigateTo('home')">Voltar para a página inicial</button>
@@ -393,9 +558,21 @@
                     Obrigado por votar na Melhor Dupla!<br>
                     Seu voto foi registrado com carinho!
                 </div>
-                <button onclick="restartDupla()">Votar novamente</button>
-                <button onclick="navigateTo('home')">Voltar para a página inicial</button>
+                <button type="button" onclick="restartDupla()">Votar novamente</button>
+                <button type="button" onclick="navigateTo('home')">Voltar para a página inicial</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Ranking -->
+    <div class="page" id="ranking">
+        <div class="envelope-card">
+            <div class="envelope-seal"><span>💎</span></div>
+            <h2>Ranking dos Galanteadores</h2>
+            <div id="ranking-galanteador"></div>
+            <h2 style="margin-top:24px;">Ranking dos Populares</h2>
+            <div id="ranking-popular"></div>
+            <button type="button" class="back-button" onclick="navigateTo('home')">Voltar</button>
         </div>
     </div>
 
@@ -405,10 +582,12 @@
         function startConfetti() {
             if (confettiInterval) return;
             confettiInterval = setInterval(() => {
+                // Se saiu da tela de agradecimento, para o confete e remove os elementos
                 if (!document.getElementById('thank-you').style.display.includes('flex') &&
                     !document.getElementById('thank-you-dupla').style.display.includes('flex')) {
                     clearInterval(confettiInterval);
                     confettiInterval = null;
+                    document.querySelectorAll('.confetti').forEach(el => el.remove());
                     return;
                 }
                 const confetti = document.createElement('div');
@@ -423,7 +602,6 @@
 
         // Navegação entre páginas
         function navigateTo(pageId) {
-            // Mostra o loader do lobo
             document.getElementById('page-loader').style.display = 'flex';
             setTimeout(() => {
                 document.getElementById('page-loader').style.display = 'none';
@@ -434,47 +612,92 @@
                     document.getElementById('sending-loader').style.display = 'none';
                     document.getElementById('thank-you').style.display = 'none';
                     document.getElementById('form-correio').style.display = 'flex';
+                    // Limpa confete se ainda houver
+                    if (confettiInterval) {
+                        clearInterval(confettiInterval);
+                        confettiInterval = null;
+                    }
+                    document.querySelectorAll('.confetti').forEach(el => el.remove());
                 }
                 if(pageId === 'melhor-dupla') {
                     document.getElementById('sending-loader-dupla').style.display = 'none';
                     document.getElementById('thank-you-dupla').style.display = 'none';
                     document.getElementById('form-dupla').style.display = 'flex';
+                    // Limpa confete se ainda houver
+                    if (confettiInterval) {
+                        clearInterval(confettiInterval);
+                        confettiInterval = null;
+                    }
+                    document.querySelectorAll('.confetti').forEach(el => el.remove());
                 }
-            }, 900); // tempo do loader (ajuste se quiser)
+                if(pageId === 'ranking') {
+                    carregarRanking();
+                }
+            }, 900);
         }
 
-        // Correio Elegante - envio com loader e agradecimento
+        // Correio Elegante - envio real para Google Forms
         document.getElementById('form-correio').addEventListener('submit', function(e) {
             e.preventDefault();
             this.style.display = 'none';
             document.getElementById('sending-loader').style.display = 'flex';
-            setTimeout(() => {
-                document.getElementById('sending-loader').style.display = 'none';
-                document.getElementById('thank-you').style.display = 'flex';
-                startConfetti();
-            }, 2000);
+
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            }).then(() => {
+                setTimeout(() => {
+                    document.getElementById('sending-loader').style.display = 'none';
+                    document.getElementById('thank-you').style.display = 'flex';
+                    startConfetti();
+                }, 2000);
+            });
         });
         function restartCorreio() {
             document.getElementById('thank-you').style.display = 'none';
             document.getElementById('form-correio').reset();
             document.getElementById('form-correio').style.display = 'flex';
+            // Limpa confete se ainda houver
+            if (confettiInterval) {
+                clearInterval(confettiInterval);
+                confettiInterval = null;
+            }
+            document.querySelectorAll('.confetti').forEach(el => el.remove());
         }
 
-        // Melhor Dupla - envio com loader e agradecimento
+        // Melhor Dupla - envio real para Google Forms
         document.getElementById('form-dupla').addEventListener('submit', function(e) {
             e.preventDefault();
             this.style.display = 'none';
             document.getElementById('sending-loader-dupla').style.display = 'flex';
-            setTimeout(() => {
-                document.getElementById('sending-loader-dupla').style.display = 'none';
-                document.getElementById('thank-you-dupla').style.display = 'flex';
-                startConfetti();
-            }, 2000);
+
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            }).then(() => {
+                setTimeout(() => {
+                    document.getElementById('sending-loader-dupla').style.display = 'none';
+                    document.getElementById('thank-you-dupla').style.display = 'flex';
+                    startConfetti();
+                }, 2000);
+            });
         });
         function restartDupla() {
             document.getElementById('thank-you-dupla').style.display = 'none';
             document.getElementById('form-dupla').reset();
             document.getElementById('form-dupla').style.display = 'flex';
+            // Limpa confete se ainda houver
+            if (confettiInterval) {
+                clearInterval(confettiInterval);
+                confettiInterval = null;
+            }
+            document.querySelectorAll('.confetti').forEach(el => el.remove());
         }
 
         // Loader do lobo ao abrir a página inicial
@@ -485,7 +708,92 @@
                 document.getElementById('page-loader').style.display = 'none';
                 document.getElementById('home').classList.add('active');
             }, 900); // mesmo tempo do loader das trocas de página
+
+            // Controle de exibição do botão Melhor Dupla
+            const btnDupla = document.getElementById('btn-melhor-dupla');
+            const btnBreve = document.getElementById('btn-dupla-breve');
+            const agora = new Date();
+            const liberar = new Date(agora.getFullYear(), 5, 10, 0, 0, 0); // 5 = junho (0-indexado)
+            if (agora >= liberar) {
+                btnDupla.style.display = '';
+                btnBreve.style.display = 'none';
+            } else {
+                btnDupla.style.display = 'none';
+                btnBreve.style.display = '';
+            }
         });
+
+        // Contador regressivo para o botão "Em breve"
+        const btnBreve = document.getElementById('btn-dupla-breve');
+        const tooltip = document.getElementById('contador-tooltip');
+        const liberarDupla = new Date(new Date().getFullYear(), 5, 10, 0, 0, 0); // 10/06 00:00
+
+        function getTempoRestante() {
+            const agora = new Date();
+            let diff = liberarDupla - agora;
+            if (diff < 0) diff = 0;
+            const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutos = Math.floor((diff / (1000 * 60)) % 60);
+            const segundos = Math.floor((diff / 1000) % 60);
+            return `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+        }
+
+        let tooltipInterval = null;
+
+        btnBreve.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Efeito divertido: tremida
+            btnBreve.classList.add('shake');
+            setTimeout(() => btnBreve.classList.remove('shake'), 500);
+
+            // Mostra o tooltip com o contador
+            btnBreve.classList.add('show-tooltip');
+            tooltip.textContent = "Disponível em: " + getTempoRestante();
+            clearInterval(tooltipInterval);
+            tooltipInterval = setInterval(() => {
+                tooltip.textContent = "Disponível em: " + getTempoRestante();
+            }, 1000);
+            // Esconde o tooltip após 4 segundos
+            setTimeout(() => {
+                btnBreve.classList.remove('show-tooltip');
+                clearInterval(tooltipInterval);
+            }, 4000);
+        });
+
+        function carregarRanking() {
+            // URLs dos CSVs publicados do Google Sheets
+            const urlGalanteador = 'https://corsproxy.io/?https://docs.google.com/spreadsheets/d/e/2PACX-1vSMaINI1nzdo1x0LUwZF-3q8RxzKAU6sl2-QsAnE3yJPmKbJIJPXb60HnBmp_j5Za5sNyh7vRD77aie/pub?gid=29067562&single=true&output=csv';
+            const urlPopular = 'https://corsproxy.io/?https://docs.google.com/spreadsheets/d/e/2PACX-1vSMaINI1nzdo1x0LUwZF-3q8RxzKAU6sl2-QsAnE3yJPmKbJIJPXb60HnBmp_j5Za5sNyh7vRD77aie/pub?gid=3938951&single=true&output=csv';
+
+            // Função para buscar e exibir
+            function fetchAndShow(url, containerId) {
+                fetch(url)
+                    .then(res => res.text())
+                    .then(text => {
+                        const linhas = text.trim().split('\n');
+                        console.log(linhas); // <-- Adicione esta linha para depuração
+                        let html = '<ol class="ranking-list">';
+                        for (let i = 1; i < linhas.length; i++) {
+                            if (!linhas[i].trim()) continue; // pula linhas vazias
+                            const partes = linhas[i].split(/[,;](?=(?:[^"]*"[^"]*")*[^"]*$)/);
+                            const nome = partes[0];
+                            const qtd = partes[1];
+                            let classe = '';
+                            let medalha = '';
+                            if (i === 1) { classe = 'top1'; medalha = '🥇'; }
+                            else if (i === 2) { classe = 'top2'; medalha = '🥈'; }
+                            else if (i === 3) { classe = 'top3'; medalha = '🥉'; }
+                            html += `<li class="${classe}">${medalha ? `<span class="ranking-medal">${medalha}</span>` : ''}<b>${nome || '(anônimo)'}</b> — ${qtd} cartinha(s)</li>`;
+                        }
+                        html += '</ol>';
+                        document.getElementById(containerId).innerHTML = html;
+                    });
+            }
+
+            fetchAndShow(urlGalanteador, 'ranking-galanteador');
+            fetchAndShow(urlPopular, 'ranking-popular');
+        }
     </script>
 </body>
 </html>
